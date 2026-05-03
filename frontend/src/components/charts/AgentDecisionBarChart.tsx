@@ -1,5 +1,6 @@
 "use client";
 import { BarChart } from "@mui/x-charts/BarChart";
+import ClientOnly from "./ClientOnly";
 
 interface Props {
   labels: string[];
@@ -9,6 +10,7 @@ interface Props {
 
 export default function AgentDecisionBarChart({ labels, values, colors }: Props) {
   return (
+    <ClientOnly>
     <BarChart
       xAxis={[{
         scaleType: "band",
@@ -37,5 +39,6 @@ export default function AgentDecisionBarChart({ labels, values, colors }: Props)
       }}
       grid={{ horizontal: true }}
     />
+    </ClientOnly>
   );
 }

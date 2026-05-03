@@ -1,5 +1,6 @@
 "use client";
 import { PieChart } from "@mui/x-charts/PieChart";
+import ClientOnly from "./ClientOnly";
 
 interface Props {
   data: { carrier: string; count: number }[];
@@ -13,6 +14,7 @@ export default function CarrierPieChart({ data }: Props) {
   );
 
   return (
+    <ClientOnly>
     <PieChart
       series={[{
         data: data.map((d, i) => ({
@@ -34,5 +36,6 @@ export default function CarrierPieChart({ data }: Props) {
         "& .MuiChartsLegend-root":  { transform: "translateX(-10px)" },
       }}
     />
+    </ClientOnly>
   );
 }

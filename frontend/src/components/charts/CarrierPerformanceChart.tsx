@@ -1,5 +1,6 @@
 "use client";
 import { BarChart } from "@mui/x-charts/BarChart";
+import ClientOnly from "./ClientOnly";
 
 interface Props {
   carriers:    string[];
@@ -9,6 +10,7 @@ interface Props {
 
 export default function CarrierPerformanceChart({ carriers, onTimeRates }: Props) {
   return (
+    <ClientOnly>
     <BarChart
       xAxis={[{
         scaleType: "band",
@@ -37,5 +39,6 @@ export default function CarrierPerformanceChart({ carriers, onTimeRates }: Props
       }}
       grid={{ horizontal: true }}
     />
+    </ClientOnly>
   );
 }

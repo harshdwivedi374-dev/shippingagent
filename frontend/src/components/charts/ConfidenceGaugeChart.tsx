@@ -1,5 +1,6 @@
 "use client";
 import { GaugeContainer, GaugeValueArc, GaugeReferenceArc, useGaugeState } from "@mui/x-charts/Gauge";
+import ClientOnly from "./ClientOnly";
 
 function GaugePointer() {
   const { valueAngle, outerRadius, cx, cy } = useGaugeState();
@@ -27,6 +28,7 @@ export default function ConfidenceGaugeChart({ value, label = "Avg AI Confidence
 
   return (
     <div className="flex flex-col items-center">
+      <ClientOnly>
       <GaugeContainer
         width={200} height={130}
         startAngle={-110} endAngle={110}
@@ -40,6 +42,7 @@ export default function ConfidenceGaugeChart({ value, label = "Avg AI Confidence
         <GaugeValueArc />
         <GaugePointer />
       </GaugeContainer>
+      </ClientOnly>
       <p className="text-2xl font-black mt-1" style={{ color }}>{value.toFixed(0)}%</p>
       <p className="text-xs text-slate-500 mt-0.5">{label}</p>
     </div>

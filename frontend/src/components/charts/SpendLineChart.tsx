@@ -1,5 +1,6 @@
 "use client";
 import { LineChart } from "@mui/x-charts/LineChart";
+import ClientOnly from "./ClientOnly";
 
 interface Props {
   months: string[];
@@ -14,6 +15,7 @@ export default function SpendLineChart({ months, values, label = "Spend ($)", co
   );
 
   return (
+    <ClientOnly>
     <LineChart
       xAxis={[{
         scaleType: "point",
@@ -44,5 +46,6 @@ export default function SpendLineChart({ months, values, label = "Spend ($)", co
       }}
       grid={{ horizontal: true }}
     />
+    </ClientOnly>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 import { BarChart } from "@mui/x-charts/BarChart";
+import ClientOnly from "./ClientOnly";
 
 interface Props {
   modes:     string[];
@@ -10,6 +11,7 @@ const COLORS = ["#ef4444","#f97316","#eab308","#22c55e","#06b6d4","#3b82f6"];
 
 export default function CarbonChart({ modes, emissions }: Props) {
   return (
+    <ClientOnly>
     <BarChart
       xAxis={[{
         scaleType: "band",
@@ -36,5 +38,6 @@ export default function CarbonChart({ modes, emissions }: Props) {
       }}
       grid={{ horizontal: true }}
     />
+    </ClientOnly>
   );
 }
