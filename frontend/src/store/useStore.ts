@@ -42,11 +42,11 @@ export const useStore = create<AppState>()(
       user: null,
       token: null,
       setAuth: (user, token) => {
-        localStorage.setItem("access_token", token);
+        if (typeof window !== "undefined") localStorage.setItem("access_token", token);
         set({ user, token });
       },
       logout: () => {
-        localStorage.removeItem("access_token");
+        if (typeof window !== "undefined") localStorage.removeItem("access_token");
         set({ user: null, token: null });
       },
 
