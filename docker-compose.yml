@@ -1,0 +1,128 @@
+version: "3.9"
+
+services:
+  # ─── API Server ──────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agentic_shipping_api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:password@postgres:5432/agentic_shipping
+      - SYNC_DATABASE_URL=postgresql://postgres:password@postgres:5432/agentic_shipping
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - CHROMA_HOST=chromadb
+      - CHROMA_PORT=8000
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      chromadb:
+        condition: service_started
+    volumes:
+      - ./app:/app/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    restart: unless-stopped
+
+  # ─── Celery Worker ───────────────────────────────────────────────────────
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agentic_shipping_worker
+    command: celery -A app.tasks.celery_app worker --loglevel=info --concurrency=4
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:password@postgres:5432/agentic_shipping
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
+  # ─── Celery Beat (Scheduler) ─────────────────────────────────────────────
+  celery_beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agentic_shipping_beat
+    command: celery -A app.tasks.celery_app beat --loglevel=info
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  # ─── Celery Flower (Monitoring) ──────────────────────────────────────────
+  flower:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agentic_shipping_flower
+    command: celery -A app.tasks.celery_app flower --port=5555
+    ports:
+      - "5555:5555"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  # ─── PostgreSQL ──────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: agentic_shipping_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: agentic_shipping
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ─── Redis ───────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: agentic_shipping_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  # ─── ChromaDB (Vector Memory) ────────────────────────────────────────────
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: agentic_shipping_chroma
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  chroma_data:
