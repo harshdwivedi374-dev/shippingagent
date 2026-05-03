@@ -66,6 +66,10 @@ async def lifespan(app: FastAPI):
     await init_db()
     logger.info("sqlite_database_ready", path="./shipping.db")
 
+    # Initialize Firebase Admin SDK
+    from app.core.firebase import init_firebase
+    init_firebase()
+
     # Start background scheduler
     scheduler_task = asyncio.create_task(background_scheduler())
     logger.info("background_scheduler_started")

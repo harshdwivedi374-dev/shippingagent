@@ -71,12 +71,20 @@ CARRIERS = [
     },
 ]
 
-ADMIN_USER = {
-    "email": "admin@agenticshipping.com",
-    "full_name": "System Admin",
-    "password": "Admin1234",
-    "role": UserRole.ADMIN,
-}
+USERS = [
+    {
+        "email": "admin@agenticshipping.com",
+        "full_name": "System Admin",
+        "password": "Admin1234",
+        "role": UserRole.ADMIN,
+    },
+    {
+        "email": "vendor@fastship.com",
+        "full_name": "FastShip Vendor",
+        "password": "Vendor1234",
+        "role": UserRole.VENDOR,
+    },
+]
 
 
 async def seed():
@@ -90,17 +98,17 @@ async def seed():
             db.add(c)
             print(f"  + {carrier_data['carrier_name']}")
 
-        print("\nSeeding admin user:")
-        admin = User(
-            id=uuid.uuid4(),
-            email=ADMIN_USER["email"],
-            full_name=ADMIN_USER["full_name"],
-            hashed_password=hash_password(ADMIN_USER["password"]),
-            role=ADMIN_USER["role"],
-        )
-        db.add(admin)
-        print(f"  + Email:    {ADMIN_USER['email']}")
-        print(f"  + Password: {ADMIN_USER['password']}")
+        print("\nSeeding demo users:")
+        for user_data in USERS:
+            user = User(
+                id=uuid.uuid4(),
+                email=user_data["email"],
+                full_name=user_data["full_name"],
+                hashed_password=hash_password(user_data["password"]),
+                role=user_data["role"],
+            )
+            db.add(user)
+            print(f"  + {user_data['role'].value:8} | {user_data['email']:30} | Password: {user_data['password']}")
 
         await db.commit()
 

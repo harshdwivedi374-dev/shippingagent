@@ -70,6 +70,11 @@ class Settings(BaseSettings):
     CARBON_CREDIT_PRICE_PER_TON: float = 25.0
     EV_LAST_MILE_PREFERENCE: bool = True
 
+    # Firebase Auth
+    FIREBASE_PROJECT_ID: Optional[str] = None
+    FIREBASE_SERVICE_ACCOUNT_PATH: Optional[str] = None
+    FIREBASE_WEB_API_KEY: Optional[str] = None
+
     class Config:
         env_file = ".env"
         case_sensitive = True

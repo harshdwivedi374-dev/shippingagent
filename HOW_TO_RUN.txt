@@ -1,0 +1,140 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                   AGENTIC SHIPPING PLATFORM - HOW TO RUN                     ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  OPTION 1: AUTOMATIC START (EASIEST - RECOMMENDED)                           │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   1. Double-click this file:
+      
+      📁 START-ALL.bat
+      
+   2. Wait 10-15 seconds for both servers to start
+   
+   3. Open browser: http://localhost:3000
+   
+   4. Login with:
+      Email:    admin@agenticshipping.com
+      Password: Admin1234
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  OPTION 2: MANUAL START (TWO TERMINALS)                                      │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   Terminal 1 - Backend:
+   ─────────────────────
+   Double-click: setup-and-start.bat
+   
+   Wait for: "Application startup complete"
+   
+   
+   Terminal 2 - Frontend:
+   ──────────────────────
+   Double-click: start-frontend.bat
+   
+   Wait for: "Ready in X.Xs"
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  WHAT YOU'LL SEE                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   Backend Terminal:
+   ─────────────────
+   ✓ Initializing SQLite database...
+   ✓ Seeding carriers: FedEx, UPS, DHL, USPS
+   ✓ Seeding demo users: admin, vendor
+   ✓ Application startup complete
+   ✓ Uvicorn running on http://0.0.0.0:8000
+   
+   
+   Frontend Terminal:
+   ──────────────────
+   ✓ Installing dependencies...
+   ✓ Starting Next.js dev server...
+   ✓ Local: http://localhost:3000
+   ✓ Ready in 3.2s
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  DEMO ACCOUNTS                                                                │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   Admin Account:
+   ──────────────
+   Email:    admin@agenticshipping.com
+   Password: Admin1234
+   
+   
+   Vendor Account:
+   ───────────────
+   Email:    vendor@fastship.com
+   Password: Vendor1234
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  URLS                                                                         │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   Frontend:     http://localhost:3000
+   Backend API:  http://localhost:8000
+   API Docs:     http://localhost:8000/docs
+   Health Check: http://localhost:8000/health
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  TROUBLESHOOTING                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   Problem: "Python not found"
+   Solution: Install Python 3.10+ from python.org
+   
+   
+   Problem: "Node not found"
+   Solution: Install Node.js 18+ from nodejs.org
+   
+   
+   Problem: "Port already in use"
+   Solution: Close other applications or restart computer
+   
+   
+   Problem: "Login failed"
+   Solution: Make sure backend is running (check Terminal 1)
+   
+   
+   Problem: "Network Error"
+   Solution: 
+   - Check backend is running on port 8000
+   - Check frontend/.env.local has correct API URL
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  STOPPING THE SERVERS                                                         │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   - Close both terminal windows
+   - Or press Ctrl+C in each terminal
+
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  NEED MORE HELP?                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+   Read these files:
+   
+   📄 QUICK_START.md      - Quick reference guide
+   📄 START_PROJECT.md    - Detailed setup instructions
+   📄 README_STARTUP.md   - Complete startup documentation
+   📄 DOCUMENTATION.md    - Full system documentation
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║  Ready? Double-click START-ALL.bat to begin! 🚀                              ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝

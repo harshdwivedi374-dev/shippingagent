@@ -22,6 +22,9 @@ class User(Base):
     hashed_password = Column(String(255), nullable=False)
     role = Column(SAEnum(UserRole), default=UserRole.OPERATOR, nullable=False)
     is_active = Column(Boolean, default=True)
+    # Firebase Auth
+    firebase_uid = Column(String(128), unique=True, nullable=True, index=True)
+    auth_provider = Column(String(50), default="local")  # local | google | email_link
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
